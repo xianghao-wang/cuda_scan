@@ -1,5 +1,11 @@
 /**
  * Hillis and Steele scan
+ * 
+ * This is a naive approach implementing scan, which is not
+ * work-efficient.
+ * 
+ * Work: O(nlogn)
+ * Span: O(logn)
  * */
 
 #include "scanner.cuh"
