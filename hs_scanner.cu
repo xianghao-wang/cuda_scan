@@ -51,5 +51,6 @@ static __global__ void hs_scan(const T *in, T *out, int n)
 
 template <typename T>
 void HSScanner<T>::run() {
-    hs_scan<<<1, this->n>>>(this->In_dev, this->Out_dev, this->n);
+    int shared_size = this->n * sizeof(T);
+    hs_scan<<<1, this->n, shared_size>>>(this->In_dev, this->Out_dev, this->n);
 }
