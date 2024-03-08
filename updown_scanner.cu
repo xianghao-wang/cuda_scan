@@ -18,6 +18,7 @@ static __global__ void ud_scan(const T *in, T *out, int n)
 {
     extern __shared__ T cached[];
     unsigned int tid, d, offset, padded_n, idx;
+    unsigned int ai, bi;
 
     tid = threadIdx.x;
     padded_n = blockDim.x * 2;
@@ -43,8 +44,19 @@ static __global__ void ud_scan(const T *in, T *out, int n)
 
     /* Down stage */
     // @xianghao: Down stage looks like binary indexed tree
-    // TODO: finish down stage
+    offset = padded_n >> 1;
+    for (d = 1; d < padded_n / 2; d *= 2)
+    {
+        offset >>= 1;
+        if (tid < 2 * d - 1)
+        {
+            ai = 2 * offset - 1 + 2 * tid * offset;
+            bi = ai + offset;
+            cached[bi] += cached[ai];
+        }
 
+        __syncthreads();
+    }
 
     if (2 * tid < n)
         out[2 * tid] = cached[2 * tid];

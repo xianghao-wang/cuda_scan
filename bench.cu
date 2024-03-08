@@ -2,6 +2,7 @@
 
 #include "scanner.cuh"
 #include "hs_scanner.cu"
+#include "updown_scanner.cu"
 
 int main(int argc, char **argv)
 {
@@ -20,7 +21,7 @@ int main(int argc, char **argv)
     for (i = 0; i < n; ++ i)
         In[i] = i;
 
-    auto hs = new HSScanner<double>(In, Out, n);
+    auto hs = new UpDownScanner<double>(In, Out, n);
     hs->begin();
     hs->run();
     hs->end();
