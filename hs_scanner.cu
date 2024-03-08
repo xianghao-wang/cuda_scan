@@ -53,4 +53,5 @@ template <typename T>
 void HSScanner<T>::run() {
     int shared_size = this->n * sizeof(T);
     hs_scan<<<1, this->n, shared_size>>>(this->In_dev, this->Out_dev, this->n);
+    cudaDeviceSynchronize();
 }

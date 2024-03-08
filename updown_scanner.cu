@@ -87,4 +87,5 @@ void UpDownScanner<T>::run() {
     shared_size = padded_n * sizeof(T);
 
     ud_scan<<<1, padded_n / 2, shared_size>>>(this->In_dev, this->Out_dev, this->n);
+    cudaDeviceSynchronize();
 }
